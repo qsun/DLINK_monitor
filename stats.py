@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from dogapi import dog_http_api as api
 from datetime import datetime
 import requests
 import mechanize
@@ -71,4 +72,13 @@ if __name__ == '__main__':
                               stats['rx'],
                               stats['tx'],)
                               
-    
+    if len(sys.argv) > 4:
+        # datadog
+        api.api_key = sys.argv[4]
+        
+        api.metric('adsl.att_down', int(stats['att_down']))
+        api.metric('adsl.att_up', int(stats['att_up']))
+        api.metric('adsl.rx', int(stats['rx']))
+        api.metric('adsl.tx', int(stats['tx']))
+        
+        
